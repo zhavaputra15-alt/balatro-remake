@@ -1,2 +1,0 @@
-# kriuk
-balatro
