@@ -1,26 +1,25 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <cstdlib>   // Untuk rand() dan srand()
+#include <ctime>     // Untuk time()
 #include "HandGenerator.h"
 
-Hand HandGenerator::generateHand() {
-    std::cout << "Generating random cards for player...\n";
+Hand HandGenerator::generateHand()
+{
+    std::cout << "Generating random hand...\n";
     
-    // Memastikan seed benar-benar acak
-    static bool seeded = false;
-    if (!seeded) {
-        srand(static_cast<unsigned int>(time(nullptr)));
-        seeded = true;
-    }
-    
-    // Pilihan nilai: 2 (Pair), 6 (Flush), 7 (Full House)
-    int randomChoices[] = {2, 6, 7};
-    int randomIndex = rand() % 3; 
-    
+    // Inisialisasi seed random berdasarkan waktu saat ini
+    srand(static_cast<unsigned int>(time(0)));
+
     Hand hand;
-    hand.value = randomChoices[randomIndex];
-    
-    std::cout << "[DEBUG] Nilai kartu random yang dihasilkan: " << hand.value << "\n";
-    
+    char suits[] = {'H', 'D', 'C', 'S'}; // H: Heart, D: Diamond, C: Club, S: Spade
+
+    // Menghasilkan 5 kartu secara acak
+    for (int i = 0; i < 5; i++) {
+        int randomRank = (rand() % 13) + 2;        // Rank acak antara 2 sampai 14 (Ace)
+        char randomSuit = suits[rand() % 4];       // Pilih suit secara acak dari array
+
+        hand.cards.push_back({randomRank, randomSuit});
+    }
+
     return hand;
 }
